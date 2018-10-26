@@ -30,3 +30,9 @@ python ./match.py
 	 * There's nothing for Bobby Robson to eat
 	 * There's nothing for Robert Webb to drink
 ```
+
+## Tests
+
+```
+pytest ./match.py
+```

@@ -5,17 +5,7 @@
 import json
 
 
-def main():
-    """main() reads two files from the current path - users.json adn venues.json
-    it uses them to generate suitable venues list and output it into stdout
-
-    """
-    with open('./users.json') as f:
-        users = json.load(f)
-
-    with open('./venues.json') as f:
-        venues = json.load(f)
-
+def vet_venues(venues, users):
     for venue in venues:
         food_venue = set(venue["food"])
         drink_venue = set(venue["drinks"])
@@ -32,6 +22,62 @@ def main():
 
             if len(drink_venue & drink_user) == 0:
                 venue["picky_drinkers"].append(user["name"])
+    return venues
+
+
+def test_main():
+    users = [
+        {
+            "name": "John Davis",
+            "wont_eat": ["Fish", "Chinese"],
+            "drinks": ["Cider", "Rum", "Soft drinks"]
+        },
+        {
+            "name": "Gary Jones",
+            "wont_eat": ["Eggs", "Pasta"],
+            "drinks": ["Tequila", "Soft drinks", "beer", "Coffee"]
+        }
+    ]
+
+    venues = [
+        {
+            "name": "El Cantina",
+            "food": ["Mexican"],
+            "drinks": ["Soft drinks", "Tequila", "Beer"]
+        },
+        {
+            "name": "Twin Dynasty",
+            "food": ["Chinese"],
+            "drinks": ["Soft Drinks", "Rum", "Beer", "Whisky", "Cider"]
+        }
+    ]
+
+    venues = vet_venues(venues, users)
+
+    assert venues == [{'drinks': ['Soft drinks', 'Tequila', 'Beer'],
+                       'food': ['Mexican'],
+                       'name': 'El Cantina',
+                       'picky_drinkers': [],
+                       'picky_eaters': []},
+                      {'drinks': ['Soft Drinks', 'Rum', 'Beer', 'Whisky', 'Cider'],
+                       'food': ['Chinese'],
+                       'name': 'Twin Dynasty',
+                       'picky_drinkers': ['Gary Jones'],
+                       'picky_eaters': ['John Davis']}]
+
+
+def main():
+    """main() reads two files from the current path - users.json adn venues.json
+    it uses them to generate suitable venues list and output it into stdout
+
+    """
+    with open('./users.json') as f:
+        users = json.load(f)
+
+    with open('./venues.json') as f:
+        venues = json.load(f)
+
+    venues = vet_venues(venues, users)
 
     print("\n Places to go:")
     for venue in venues:

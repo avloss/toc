@@ -1,7 +1,15 @@
+# -*- coding: utf-8 -*-
+"""Lunch picker
+"""
+
 import json
 
 
 def main():
+    """main() reads two files from the current path - users.json adn venues.json
+    it uses them to generate suitable venues list and output it into stdout
+
+    """
     with open('./users.json') as f:
         users = json.load(f)
 
@@ -25,13 +33,13 @@ def main():
             if len(drink_venue & drink_user) == 0:
                 venue["picky_drinkers"].append(user["name"])
 
-    print("Places to go:")
+    print("\n Places to go:")
     for venue in venues:
         if venue["picky_eaters"] or venue["picky_drinkers"]:
             continue
         print(f"* {venue['name']}")
 
-    print("Places to avoid:")
+    print("\n Places to avoid:")
     for venue in venues:
         if venue["picky_eaters"] or venue["picky_drinkers"]:
             print(f"* {venue['name']}")

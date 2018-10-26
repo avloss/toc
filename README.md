@@ -12,6 +12,8 @@ venues.json - describe venue food and drink options
 
 ## Execution
 
+Use Python 3.6+
+
 ```
 python ./match.py
 ```

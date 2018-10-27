@@ -7,15 +7,15 @@ import json
 
 def vet_venues(venues, users):
     for venue in venues:
-        food_venue = set(venue["food"])
-        drink_venue = set(venue["drinks"])
+        food_venue = set([s.lower() for s in venue["food"]])
+        drink_venue = set([s.lower() for s in venue["drinks"]])
 
         venue["picky_eaters"] = []
         venue["picky_drinkers"] = []
 
         for user in users:
-            food_user = set(user["wont_eat"])
-            drink_user = set(user["drinks"])
+            food_user = set([s.lower() for s in user["wont_eat"]])
+            drink_user = set([s.lower() for s in user["drinks"]])
 
             if len(food_venue - food_user) == 0:
                 venue["picky_eaters"].append(user["name"])

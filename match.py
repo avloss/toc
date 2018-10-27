@@ -35,7 +35,7 @@ def test_main():
         {
             "name": "Gary Jones",
             "wont_eat": ["Eggs", "Pasta"],
-            "drinks": ["Tequila", "Soft drinks", "beer", "Coffee"]
+            "drinks": ["Tequila", "Coffee"]
         }
     ]
 
